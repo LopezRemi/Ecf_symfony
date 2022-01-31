@@ -37,6 +37,9 @@ class Books
     #[ORM\Column(type: 'boolean')]
     private $status;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'books_id')]
+    private $User_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class Books
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->User_id;
+    }
+
+    public function setUserId(?User $User_id): self
+    {
+        $this->User_id = $User_id;
 
         return $this;
     }
