@@ -46,41 +46,27 @@
 </style>
 
 <div class="example-wrapper">
-<a href="{{ path('book_create' )}}">
-			Ajouter un livre</a><br><br>
 <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Date</th>
-                <th>Résumé</th>
-                <th>Categorie</th>
-                <th>état</th> 
-                <th>Editeur</th>
-                <th>Status</th>              
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Emain</th>
+                <th>Livre emprunté</th>            
             </tr>
         </thead> 
         <tbody>
-    {% for book in books %}
+    {% for user in users %}
 	
 		<tr>
-			<td>{{ book.getTitle() }}</td>
-            <td>{{ book.getAuthor()}}</td>
-            <td>{{ book.getReleaseDate()|date('d,m,Y') }}</td>
-            <td>{{ book.getSummary() }}</td>
-            <td>{{ book.getCategory()}}</td>
-            <td>{{ book.getBookCondition()}}</td>
-            <td>{{ book.getEditor()}}</td>
-            <td>
-                {% if book.getStatus() == 1 %}
-                disponible
-                {% else %}
-                emprunté
-                {% endif %}
+			<td>{{ user.getFirstName() }}</td>
+            <td>{{ user.getLastName()}}</td>
+            <td>{{ user.getEmail()}}</td>
+            <td>{{ user.getLoan()}}</td>
+          
             </td>
-            <td><a class="btn btn-info" href="description/{{ book.getId() }}"> plus d'info </a></td>
-            <td><a class="btn btn-danger" href="delete/{{ book.getId() }}"> supprimer </a></td>
+            {# <td><a class="btn btn-info" href="description/{{ book.getId() }}"> plus d'info </a></td>
+            <td><a class="btn btn-danger" href="delete/{{ book.getId() }}"> supprimer </a></td> #}
 		</tr>
 	{% endfor %}
 	</tbody>

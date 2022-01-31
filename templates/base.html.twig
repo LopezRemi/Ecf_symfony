@@ -15,6 +15,17 @@
         {% endblock %}
     </head>
     <body>
+    {% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				<h3 class="d-flex justify-content-center">{{message}}</h3>
+			</div>
+		{% endfor %}
+
+		{% for message in app.flashes('danger') %}
+			<div class="alert alert-danger">
+				<h3 class="d-flex justify-content-center">{{message}}</h3>
+			</div>
+		{% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>

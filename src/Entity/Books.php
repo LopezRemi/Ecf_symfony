@@ -34,6 +34,9 @@ class Books
     #[ORM\Column(type: 'string', length: 50)]
     private $editor;
 
+    #[ORM\Column(type: 'boolean')]
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +122,18 @@ class Books
     public function setEditor(string $editor): self
     {
         $this->editor = $editor;
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
