@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 31 jan. 2022 à 10:01
+-- Généré le : lun. 31 jan. 2022 à 12:12
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.0.13
 
@@ -35,15 +35,18 @@ CREATE TABLE `books` (
   `release_date` date NOT NULL,
   `category` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `book_condition` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `editor` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `editor` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `books`
 --
 
-INSERT INTO `books` (`id`, `title`, `author`, `summary`, `release_date`, `category`, `book_condition`, `editor`) VALUES
-(1, 'l\'assomoir', 'jean moulin', 'un livre qui assome', '2022-01-19', 'roman', 'bonne', 'grasset');
+INSERT INTO `books` (`id`, `title`, `author`, `summary`, `release_date`, `category`, `book_condition`, `editor`, `status`) VALUES
+(1, 'l\'assomoir', 'jean moulin', 'un livre qui assome', '2022-01-19', 'roman', 'bonne', 'grasset', 0),
+(3, 'le tour du monde en 80 jours', 'jules vernes', 'il fait le tour du monde avec une montgolfière', '2017-01-01', 'aventure', 'Bon état', 'Galimard', 1),
+(4, 'le tour du monde en 80 jours 2', 'jules vernes', 'il fait le tour du monde avec une montgolfière', '2017-01-01', 'aventure', 'Etat passable', 'Galimard', 1);
 
 -- --------------------------------------------------------
 
@@ -62,7 +65,8 @@ CREATE TABLE `doctrine_migration_versions` (
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20220131082208', '2022-01-31 09:23:07', 29);
+('DoctrineMigrations\\Version20220131082208', '2022-01-31 09:23:07', 29),
+('DoctrineMigrations\\Version20220131093353', '2022-01-31 10:34:03', 72);
 
 --
 -- Index pour les tables déchargées
@@ -88,7 +92,7 @@ ALTER TABLE `doctrine_migration_versions`
 -- AUTO_INCREMENT pour la table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
