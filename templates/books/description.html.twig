@@ -7,46 +7,54 @@
 	<style>
 		.presentation-livre {
 			margin: 1em auto;
-			max-width: 800px;
+			max-width: 900px;
 			width: 80%;
 			font: 18px / 1.5 sans-serif;
 		}
-		
 	</style>
-
+	<center>
+		<a class="fs-3" href="{{ path('books_listing' )}}">
+			Retour à la liste des livres</a>
+	</center>
 	<div class="presentation-livre d-flex flex-column justify-content-center">
-		<h1>{{ data.title }}</h1>
-		<div>
-			<p><b>Auteur :</b>
-				{{ data.author }}</p>
-		</div>
-		<div>
-			<p><b>Date de parution :</b>
-				{{ data.release_date|date('d/m/Y') }}</p>
-		</div>
-		<div>
-			<p><b>Résumé :</b>
+		<div class="d-flex flex-wrap justify-content-center mb-5">
+			<h1 class="mb-5">{{ data.title }}</h1>
+			<p>
+				<b>Résumé :</b>
 				{{ data.summary }}</p>
 		</div>
-		<div>
-			<p><b>Categorie :</b>
+
+		{# CARACTÉRISTIQUES DÉTAILLÉES #}
+		<div class="d-flex justify-content-between mb-5">
+			<p>
+				<b>Auteur :</b>
+				{{ data.author }}</p>
+			<p>
+				<b>Date de parution :</b>
+				{{ data.release_date|date('d/m/Y') }}</p>
+			<p>
+				<b>Categorie :</b>
 				{{ data.category }}</p>
-		</div>
-		<div>
-			<p><b>Editeur :</b>
+			<p>
+				<b>Editeur :</b>
 				{{ data.editor }}</p>
 		</div>
-		<div>
-			<p><b>Etat du livre :</b>
+
+		{# Etat du livre et de son emprunt #}
+		<div class="d-flex flex-wrap justify-content-around">
+			<p>
+				<b>Etat du livre :</b>
 				{{ data.book_condition }}</p>
-		</div>
-		<div>
-			<p><b>Statu du livre :</b>
+			<p>
+				<b>Statu du livre :</b>
 				{% if data.status == 1 %}
-			disponible
-		{% else %}
-			emprunté
-		{% endif %}</p>
+					disponible
+				{% else %}
+					emprunté par
+					{{ data.user_id.firstname }}
+					{{ data.user_id.lastname }}
+				{% endif %}
+			</p>
 		</div>
 	</div>
 {% endblock %}

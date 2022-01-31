@@ -17,12 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    #[Route('/books', name: 'books')]
+    #[Route('/acceuil', name: 'acceuil')]
     public function index(): Response
     {
-        return $this->render('books/index.html.twig', [
-            'controller_name' => 'BooksController',
-        ]);
+        return $this->render('books/index.html.twig');
     }
 
 
@@ -46,43 +44,44 @@ class BooksController extends AbstractController
         $book->setStatus(true);
         $form = $this->createFormBuilder($book)
         ->add('title', TextType::class, [
-            'label' => 'Titre du livre',
+            'label' => 'Titre du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
          ])
         ->add('author', TextType::class, [
-            'label' => 'Auteur du livre',
+            'label' => 'Auteur du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('release_date', DateType::class, [
-            'label' => 'Date de parution du livre',
+            'label' => 'Date de parution du livre :',
+            'widget' => 'single_text',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('summary', TextType::class, [
-            'label' => 'Résumé du livre',
+            'label' => 'Résumé du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('category', TextType::class, [
-            'label' => 'Genre du livre',
+            'label' => 'Genre du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('editor', TextType::class, [
-            'label' => 'Editeur du livre',
+            'label' => 'Editeur du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('status', ChoiceType::class, [
-            'label' => 'Disponibilité du livre',
+            'label' => 'Disponibilité du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ],
@@ -92,7 +91,7 @@ class BooksController extends AbstractController
             ],
         ])
         ->add('book_condition', ChoiceType::class, [
-            'label' => 'Etat du livre',
+            'label' => 'Etat du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ],
@@ -125,7 +124,7 @@ class BooksController extends AbstractController
     ]);
     }
 
-    #[Route('/books/delete/{id}', name: 'book_delete')]
+    #[Route('/book/delete/{id}', name: 'book_delete')]
     public function remove(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
@@ -140,7 +139,7 @@ class BooksController extends AbstractController
         return $this->redirectToRoute('books_listing');
     }
 
-    #[Route('/books/description/{id}', name: 'book_description', methods: ['GET'])]
+    #[Route('/book/description/{id}', name: 'book_description', methods: ['GET'])]
     public function description(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
@@ -156,7 +155,8 @@ class BooksController extends AbstractController
             'category' => $book->getCategory(),
             'book_condition' => $book->getBookCondition(),
             'editor' => $book->getEditor(),
-            'status' => $book->getStatus()
+            'status' => $book->getStatus(),
+            'user_id' => $book->getUserId(),
             
         ];
 
