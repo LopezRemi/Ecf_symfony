@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Books;
-use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -159,11 +160,9 @@ class BooksController extends AbstractController
             
         ];
 
-        if(!$book) {
+        if (!$book) {
             throw $this->createNotFoundException(
-            
                 "Livre non trouvé pour l'id " . $id
-
             );
         }
 
@@ -174,5 +173,41 @@ class BooksController extends AbstractController
         ]);
     }
 
+    #[Route('/books/loan/{id}', name: 'book_loan')]
+    public function loan(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
+        // $book->setDueDateTask(new \DateTime('now'));
 
+        $form = $this->createFormBuilder($book)
+        ->add('user_id', EntityType::class, [
+            'label' => 'Utilisateur emprunteur :',
+            'class' => User::class,
+            'attr' => ['class'=> 'form-control mb-4']
+        ])
+        ->add('save', SubmitType::class, [
+            'label' => 'Validation de l\'emprunt',
+            'attr' => [
+                'class' => 'btn btn-primary'
+                ]])
+        ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $update = $form->getData();
+            
+            $book->setUserId($update->getUserId());
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Livre emprunté avec succes');
+            return $this->redirectToRoute('books_listing');
+        }
+        return $this->render('books/loan.html.twig', [
+            'form' => $form->createView(),
+    ]);
+    }
 }

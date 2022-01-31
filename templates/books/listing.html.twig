@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les tâches{% endblock %}
+{% block title %}Les livres{% endblock %}
 
 {% block stylesheets %}
        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -80,6 +80,7 @@
                 {% endif %}
             </td>
             <td><a class="btn btn-info" href="description/{{ book.getId() }}"> plus d'info </a></td>
+            <td><a class="btn btn-warning" href="loan/{{ book.getId() }}"> Emprunt </a></td>
             <td><a class="btn btn-danger" href="delete/{{ book.getId() }}"> supprimer </a></td>
 		</tr>
 	{% endfor %}
