@@ -138,4 +138,41 @@ class BooksController extends AbstractController
 
         return $this->redirectToRoute('books_listing');
     }
+
+    #[Route('/books/description/{id}', name: 'book_description', methods: ['GET'])]
+    public function description(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
+
+
+        $data = [
+            'id' => $book->getId(),
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'summary' => $book->getSummary(),
+            'release_date' => $book->getReleaseDate(),
+            'category' => $book->getCategory(),
+            'book_condition' => $book->getBookCondition(),
+            'editor' => $book->getEditor(),
+            'status' => $book->getStatus()
+            
+        ];
+
+        if(!$book) {
+            throw $this->createNotFoundException(
+            
+                "Livre non trouvé pour l'id " . $id
+
+            );
+        }
+
+        
+
+        return $this->render('books/description.html.twig', [
+            'data' => $data,
+        ]);
+    }
+
+
 }
