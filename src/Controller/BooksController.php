@@ -164,9 +164,7 @@ class BooksController extends AbstractController
             throw $this->createNotFoundException(
                 "Livre non trouvé pour l'id " . $id
             );
-        }
-
-        
+        }        
 
         return $this->render('books/description.html.twig', [
             'data' => $data,
