@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Books;
+use App\Entity\Historical;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -200,11 +202,15 @@ class BooksController extends AbstractController
             $book->setUserId($update->getUserId());
             $book->setStatus(0);
 
-            // $bookLoan[] = $book->getId();
-            // $book->getUserId()->setLoan(array_push($bookLoan));
+            $history = new Historical;
+            $history->setDateLoan(new \DateTime('now'));
+            $history->setDateReturn(new \DateTime('+15 days'));
+            $history->addUserId($update->getUserId());
+            $history->addBookId($book);
+            
 
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($book);
+            $entityManager->persist($history);
             $entityManager->flush();
 
             $this->addFlash('success', 'Livre emprunté avec succes');
