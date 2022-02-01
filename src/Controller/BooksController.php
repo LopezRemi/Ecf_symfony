@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    #[Route('/acceuil', name: 'acceuil')]
+    #[Route('/accueil', name: 'accueil')]
     public function index(): Response
     {
         return $this->render('books/index.html.twig');

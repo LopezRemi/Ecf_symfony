@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}
 			{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -32,7 +32,7 @@
 		{% endfor %}
 		<nav class="navbar sticky-top navbar-light" style="background-color: #20c997;">
 			<div class="container-fluid d-flex justify-content-around">
-				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('acceuil' )}}">Acceuil</a>
+				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('accueil' )}}">Accueil</a>
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('books_listing' )}}">Liste des livres</a>
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('users_listing' )}}">Liste des emprunteurs</a>
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('book_create' )}}">Ajouter un livre</a>
