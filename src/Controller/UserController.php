@@ -78,4 +78,22 @@ class UserController extends AbstractController
         'form' => $form,
     ]);
     }
+
+    #[Route('/user/profil/{id}', name: 'user_profil')]
+    public function profil(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {   
+        $entityManager = $doctrine->getManager(); 
+        $user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$id]);
+        $data = [
+            'id'=>$user->getId(),
+            'firstname'=>$user->getFirstname(),
+            'lastname'=>$user->getLastname(),
+            'email'=>$user->getEmail(),    
+        ];
+
+
+        return $this->render('user/profil.html.twig', [
+            'data' => $data,
+        ]);
+    }
 }

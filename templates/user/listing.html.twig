@@ -64,6 +64,10 @@
 			<td>{{ user.getFirstName() }}</td>
             <td>{{ user.getLastName()}}</td>
             <td>{{ user.getEmail()}}</td>
+            <td>
+            <a class="btn btn-info" href="{{ path('user_profil', {'id': user.getId()} )}}">
+								Plus d'info
+							</a>
             {# <td>{{ user.getbooksId(title)}}</td> #}
           
             </td>
