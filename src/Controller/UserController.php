@@ -88,7 +88,8 @@ class UserController extends AbstractController
             'id'=>$user->getId(),
             'firstname'=>$user->getFirstname(),
             'lastname'=>$user->getLastname(),
-            'email'=>$user->getEmail(),    
+            'email'=>$user->getEmail(), 
+            'dateloan'=>$user->getHistoricals(),   
         ];
 
 
