@@ -100,9 +100,15 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 							</a>
 						</td>
 						<td>
-							<a class="btn btn-warning" href="{{ path('book_loan', {'id': book.getId()} )}}">
+						{% if book.getStatus() == 1 %}
+							<a class="btn btn-success w-100" href="{{ path('book_loan', {'id': book.getId()} )}}">
 								Emprunt
 							</a>
+						{% else %}
+							<a class="btn btn-warning w-100" href="{{ path('book_return', {'id': book.getId()} )}}">
+								Rendre
+							</a>
+						{% endif %}
 						</td>
 						<td>
 							<a class="btn btn-danger" href="{{ path('book_delete', {'id': book.getId()} )}}">

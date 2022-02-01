@@ -173,12 +173,12 @@ class BooksController extends AbstractController
         ]);
     }
 
-    #[Route('/books/loan/{id}', name: 'book_loan')]
+    #[Route('/book/loan/{id}', name: 'book_loan')]
     public function loan(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-        // $book->setDueDateTask(new \DateTime('now'));
+        $book->setDateEmprunt(new \DateTime('now'));
 
         $form = $this->createFormBuilder($book)
         ->add('user_id', EntityType::class, [
@@ -198,6 +198,10 @@ class BooksController extends AbstractController
             $update = $form->getData();
             
             $book->setUserId($update->getUserId());
+            $book->setStatus(0);
+
+            // $bookLoan[] = $book->getId();
+            // $book->getUserId()->setLoan(array_push($bookLoan));
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($book);
@@ -209,5 +213,21 @@ class BooksController extends AbstractController
         return $this->render('books/loan.html.twig', [
             'form' => $form->createView(),
     ]);
+    }
+
+    #[Route('/book/return/{id}', name: 'book_return')]
+    public function bookReturn(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
+        $book->setDateReturn(new \DateTime('now'));
+        $book->setStatus(1);
+
+        $entityManager = $doctrine->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+        $this->addFlash('success', 'Livre rendu avec succes');
+            return $this->redirectToRoute('books_listing');
     }
 }

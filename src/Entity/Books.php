@@ -40,6 +40,12 @@ class Books
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'books_id')]
     private $User_id;
 
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $date_emprunt;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $date_return;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +155,30 @@ class Books
     public function setUserId(?User $User_id): self
     {
         $this->User_id = $User_id;
+
+        return $this;
+    }
+
+    public function getDateEmprunt(): ?\DateTimeInterface
+    {
+        return $this->date_emprunt;
+    }
+
+    public function setDateEmprunt(?\DateTimeInterface $date_emprunt): self
+    {
+        $this->date_emprunt = $date_emprunt;
+
+        return $this;
+    }
+
+    public function getDateReturn(): ?\DateTimeInterface
+    {
+        return $this->date_return;
+    }
+
+    public function setDateReturn(?\DateTimeInterface $date_return): self
+    {
+        $this->date_return = $date_return;
 
         return $this;
     }
