@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Books;
-use Doctrine\DBAL\Types\BooleanType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,12 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    #[Route('/books', name: 'books')]
+    #[Route('/accueil', name: 'accueil')]
     public function index(): Response
     {
-        return $this->render('books/index.html.twig', [
-            'controller_name' => 'BooksController',
-        ]);
+        return $this->render('books/index.html.twig');
     }
 
 
@@ -45,43 +44,44 @@ class BooksController extends AbstractController
         $book->setStatus(true);
         $form = $this->createFormBuilder($book)
         ->add('title', TextType::class, [
-            'label' => 'Titre du livre',
+            'label' => 'Titre du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
          ])
         ->add('author', TextType::class, [
-            'label' => 'Auteur du livre',
+            'label' => 'Auteur du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('release_date', DateType::class, [
-            'label' => 'Date de parution du livre',
+            'label' => 'Date de parution du livre :',
+            'widget' => 'single_text',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('summary', TextType::class, [
-            'label' => 'Résumé du livre',
+            'label' => 'Résumé du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('category', TextType::class, [
-            'label' => 'Genre du livre',
+            'label' => 'Genre du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('editor', TextType::class, [
-            'label' => 'Editeur du livre',
+            'label' => 'Editeur du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ]
         ])
         ->add('status', ChoiceType::class, [
-            'label' => 'Disponibilité du livre',
+            'label' => 'Disponibilité du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ],
@@ -91,7 +91,7 @@ class BooksController extends AbstractController
             ],
         ])
         ->add('book_condition', ChoiceType::class, [
-            'label' => 'Etat du livre',
+            'label' => 'Etat du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'
             ],
@@ -124,7 +124,7 @@ class BooksController extends AbstractController
     ]);
     }
 
-    #[Route('/books/delete/{id}', name: 'book_delete')]
+    #[Route('/book/delete/{id}', name: 'book_delete')]
     public function remove(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
@@ -139,7 +139,7 @@ class BooksController extends AbstractController
         return $this->redirectToRoute('books_listing');
     }
 
-    #[Route('/books/description/{id}', name: 'book_description', methods: ['GET'])]
+    #[Route('/book/description/{id}', name: 'book_description', methods: ['GET'])]
     public function description(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
@@ -155,15 +155,14 @@ class BooksController extends AbstractController
             'category' => $book->getCategory(),
             'book_condition' => $book->getBookCondition(),
             'editor' => $book->getEditor(),
-            'status' => $book->getStatus()
+            'status' => $book->getStatus(),
+            'user_id' => $book->getUserId(),
             
         ];
 
-        if(!$book) {
+        if (!$book) {
             throw $this->createNotFoundException(
-            
                 "Livre non trouvé pour l'id " . $id
-
             );
         }
 
@@ -174,5 +173,61 @@ class BooksController extends AbstractController
         ]);
     }
 
+    #[Route('/book/loan/{id}', name: 'book_loan')]
+    public function loan(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
+        $book->setDateEmprunt(new \DateTime('now'));
 
+        $form = $this->createFormBuilder($book)
+        ->add('user_id', EntityType::class, [
+            'label' => 'Utilisateur emprunteur :',
+            'class' => User::class,
+            'attr' => ['class'=> 'form-control mb-4']
+        ])
+        ->add('save', SubmitType::class, [
+            'label' => 'Validation de l\'emprunt',
+            'attr' => [
+                'class' => 'btn btn-primary'
+                ]])
+        ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $update = $form->getData();
+            
+            $book->setUserId($update->getUserId());
+            $book->setStatus(0);
+
+            // $bookLoan[] = $book->getId();
+            // $book->getUserId()->setLoan(array_push($bookLoan));
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Livre emprunté avec succes');
+            return $this->redirectToRoute('books_listing');
+        }
+        return $this->render('books/loan.html.twig', [
+            'form' => $form->createView(),
+    ]);
+    }
+
+    #[Route('/book/return/{id}', name: 'book_return')]
+    public function bookReturn(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
+        $book->setDateReturn(new \DateTime('now'));
+        $book->setStatus(1);
+
+        $entityManager = $doctrine->getManager();
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+        $this->addFlash('success', 'Livre rendu avec succes');
+            return $this->redirectToRoute('books_listing');
+    }
 }
