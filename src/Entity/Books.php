@@ -51,6 +51,9 @@ class Books
     #[ORM\ManyToMany(targetEntity: Historical::class, mappedBy: 'bookId')]
     private $historicals;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $cover;
+
     public function __construct()
     {
         $this->historicals = new ArrayCollection();
@@ -216,6 +219,18 @@ class Books
         if ($this->historicals->removeElement($historical)) {
             $historical->removeBookId($this);
         }
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?string $cover): self
+    {
+        $this->cover = $cover;
 
         return $this;
     }

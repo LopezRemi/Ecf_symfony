@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
@@ -168,7 +168,7 @@ class BooksController extends AbstractController
         $book = $entityManager->getRepository(Books::class)->find($id);
         
 
-        foreach ($book->getHistoricals() as $historical) {
+        foreach ($book->getHistoricals() as $historical ){
             $entityManager->remove($historical);
         }
         
@@ -198,6 +198,7 @@ class BooksController extends AbstractController
             'editor' => $book->getEditor(),
             'status' => $book->getStatus(),
             'user_id' => $book->getUserId(),
+            'cover' => $book->getCover(),
             
         ];
 
@@ -205,7 +206,7 @@ class BooksController extends AbstractController
             throw $this->createNotFoundException(
                 "Livre non trouvé pour l'id " . $id
             );
-        }
+        }        
 
         return $this->render('books/description.html.twig', [
             'data' => $data,
@@ -268,10 +269,10 @@ class BooksController extends AbstractController
         $book->setStatus(1);
 
         $entityManager = $doctrine->getManager();
-        $entityManager->persist($book);
-        $entityManager->flush();
+            $entityManager->persist($book);
+            $entityManager->flush();
 
         $this->addFlash('success', 'Livre rendu avec succes');
-        return $this->redirectToRoute('books_listing');
+            return $this->redirectToRoute('books_listing');
     }
 }

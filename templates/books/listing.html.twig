@@ -63,6 +63,7 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 		<table id="example" class="display" style="width:100%">
 			<thead>
 				<tr>
+					<th>Cover</th>
 					<th>Titre</th>
 					<th>Auteur</th>
 					<th>Categorie</th>
@@ -80,6 +81,7 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 				{% for book in books %}
 
 					<tr>
+						<td><img style="height: 150px;" src="/ecf_symfony/src/uploads/{{ book.getCover() }}"></td>
 						<td>{{ book.getTitle() }}</td>
 						<td>{{ book.getAuthor()}}</td>
 						<td>{{ book.getCategory()}}</td>
