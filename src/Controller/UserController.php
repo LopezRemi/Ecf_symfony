@@ -86,13 +86,6 @@ class UserController extends AbstractController
         $entityManager = $doctrine->getManager(); 
         $user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$id]);
          
-
-        
-
-    //  dump($user);
-    //  die;
-
-
         return $this->render('user/profil.html.twig', [
             'user' => $user,
         ]);
