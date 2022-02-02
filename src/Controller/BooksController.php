@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class BooksController extends AbstractController
 {
     #[Route('/accueil', name: 'accueil')]
@@ -130,10 +131,16 @@ class BooksController extends AbstractController
     public function remove(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
-
         $book = $entityManager->getRepository(Books::class)->find($id);
         
+
+        foreach ($book->getHistoricals() as $historical ){
+            $book->removeHistorical($historical);
+        }
+
+        
         $entityManager->remove($book);
+
         $entityManager->flush();
 
         $this->addFlash('danger', 'Livre Supprimé avec succes');
@@ -146,7 +153,7 @@ class BooksController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-
+        
 
         $data = [
             'id' => $book->getId(),
@@ -172,6 +179,7 @@ class BooksController extends AbstractController
 
         return $this->render('books/description.html.twig', [
             'data' => $data,
+            'book' => $book,
         ]);
     }
 
