@@ -11,10 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
@@ -37,7 +40,7 @@ class BooksController extends AbstractController
     }
 
     #[Route('/book/create', name: 'book_create')]
-    public function create(Request $request, ManagerRegistry $doctrine): Response
+    public function create(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
     {
         // mise en place du gestionnaire de BDD :
         $entityManager = $doctrine->getManager();
@@ -103,6 +106,23 @@ class BooksController extends AbstractController
                 'mauvais' => 'Mauvais état',
             ],
         ])
+        ->add('cover', FileType::class, [
+            'label' => 'Votre cover :',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '512k',
+                    'mimeTypes' => [
+                        'image/jpg',
+                        'image/jpeg',
+                        'image/svg',
+                        'image/png',
+                    ],
+                    'mimeTypesMessage' => 'Merci de choisir un cover valide ".jpg ,.jpeg ,.svg ,.png" et inférieur à 512Ko.',
+                ])
+            ],
+        ])
         ->add('save', SubmitType::class, [
             'label' => 'Créé le livre',
             'attr' => [
@@ -114,6 +134,21 @@ class BooksController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $book = $form->getData();
+
+
+            $coverFile = $form->get('cover')->getData();
+            if ($coverFile) {
+                $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$coverFile->guessExtension();
+                $coverFile->move(
+                    $this->getParameter('uploads_directory'),
+                    $newFilename
+                );
+                $book->setCover($newFilename);
+            }
+
+
             $entityManager->persist($book);
             $entityManager->flush();
             $this->addFlash('success', 'Livre ajoutée avec succes');
@@ -130,8 +165,12 @@ class BooksController extends AbstractController
     public function remove(ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
-
         $book = $entityManager->getRepository(Books::class)->find($id);
+        
+
+        foreach ($book->getHistoricals() as $historical) {
+            $entityManager->remove($historical);
+        }
         
         $entityManager->remove($book);
         $entityManager->flush();
@@ -146,7 +185,7 @@ class BooksController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-
+        
 
         $data = [
             'id' => $book->getId(),
@@ -168,10 +207,9 @@ class BooksController extends AbstractController
             );
         }
 
-        
-
         return $this->render('books/description.html.twig', [
             'data' => $data,
+            'book' => $book,
         ]);
     }
 
@@ -230,10 +268,10 @@ class BooksController extends AbstractController
         $book->setStatus(1);
 
         $entityManager = $doctrine->getManager();
-            $entityManager->persist($book);
-            $entityManager->flush();
+        $entityManager->persist($book);
+        $entityManager->flush();
 
         $this->addFlash('success', 'Livre rendu avec succes');
-            return $this->redirectToRoute('books_listing');
+        return $this->redirectToRoute('books_listing');
     }
 }

@@ -51,6 +51,20 @@
 					{{ data.user_id.firstname }}
 					{{ data.user_id.lastname }}
 				{% endif %}
+			<p>
+			<p>
+				<b>Historique d'emprunt :</b>
+				 {% for history in book.getHistoricals() %}
+				 {% for user in history.getUserId() %}
+				 <br>
+				 {{user.getFirstname()}} {{user.getLastname()}}
+				 <br>
+    			 {{history.dateloan|date('d/m/Y')}}
+				 {# {{history.datereturn|date('d/m/Y')}} #}
+				 {% endfor %}
+				 {% endfor %}</p>
+			<p>
+
 			</p>
 		</div>
 	</div>
