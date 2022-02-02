@@ -24,7 +24,16 @@
 			<p>
 				<b>Identifiant :</b>
 				{{ data.id }}</p>
-			
+			<p>
+				<b>Historique :</b>
+				 {% for datas in data.getHistoricals() %}
+    			 {{datas.dateloan|date('d/m/Y')}}
+				 {{datas.datereturn|date('d/m/Y')}}
+				 {% for books in datas.getBookId() %}
+				 {{books.getTitle()}}
+    			 {% endfor %}
+				 {% endfor %}</p>
+			<p>
 		</div>
 
 
