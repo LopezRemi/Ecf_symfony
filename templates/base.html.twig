@@ -26,6 +26,9 @@
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('users_listing' )}}">Liste des emprunteurs</a>
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('book_create' )}}">Ajouter un livre</a>
 				<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('user_create' )}}">Ajouter un emprunteur</a>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}	
+				<a class="btn btn-danger my-3" href="{{path('app_logout')}}"> Deconnexion </a>
+			{% endif %}
 			</div>
 		</nav>
 		
