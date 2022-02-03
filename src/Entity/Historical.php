@@ -27,6 +27,9 @@ class Historical
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $dateReturn;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $dateOfReturn;
+
     public function __construct()
     {
         $this->bookId = new ArrayCollection();
@@ -106,6 +109,18 @@ class Historical
     public function setDateReturn(?\DateTimeInterface $dateReturn): self
     {
         $this->dateReturn = $dateReturn;
+
+        return $this;
+    }
+
+    public function getDateOfReturn(): ?\DateTimeInterface
+    {
+        return $this->dateOfReturn;
+    }
+
+    public function setDateOfReturn(?\DateTimeInterface $dateOfReturn): self
+    {
+        $this->dateOfReturn = $dateOfReturn;
 
         return $this;
     }

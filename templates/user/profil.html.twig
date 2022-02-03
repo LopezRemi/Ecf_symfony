@@ -29,6 +29,7 @@
 				 {% for history in user.getHistoricals() %}
     			 {{history.dateloan|date('d/m/Y')}}
 				 {{history.datereturn|date('d/m/Y')}}
+				 {{history.dateofreturn|date('d/m/Y')}}
 				 {% for books in history.getBookId() %}
 				 {{books.getTitle()}}
     			 {% endfor %}

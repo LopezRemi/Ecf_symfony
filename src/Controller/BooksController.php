@@ -265,7 +265,8 @@ class BooksController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-        $book->setDateReturn(new \DateTime('now'));
+        $historical = $entityManager->getRepository(Historical::class)->findOneBy(['id'=> $id]);
+        $historical->setDateOfReturn(new \DateTime('now'));
         $book->setStatus(1);
 
         $entityManager = $doctrine->getManager();
