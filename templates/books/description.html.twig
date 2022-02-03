@@ -11,8 +11,13 @@
 			width: 80%;
 			font: 18px / 1.5 sans-serif;
 		}
+		#cover {
+			display: flex;
+			justify-content: center;
+			height: 500px;
+		}
 	</style>
-	
+
 	<div class="presentation-livre d-flex flex-column justify-content-center">
 		<div class="d-flex flex-wrap justify-content-center mb-5">
 			<h1 class="mb-5">{{ data.title }}</h1>
@@ -38,35 +43,47 @@
 		</div>
 
 		{# Etat du livre et de son emprunt #}
-		<div class="d-flex flex-wrap justify-content-around">
-			<p>
-				<b>Etat du livre :</b>
-				{{ data.book_condition }}</p>
-			<p>
-				<b>Statu du livre :</b>
-				{% if data.status == 1 %}
-					disponible
-				{% else %}
-					emprunté par
-					{{ data.user_id.firstname }}
-					{{ data.user_id.lastname }}
-				{% endif %}
-			<p>
-			<p>
-				<b>Historique d'emprunt :</b>
-				 {% for history in book.getHistoricals() %}
-				 {% for user in history.getUserId() %}
-				 <br>
-				 {{user.getFirstname()}} {{user.getLastname()}}
-				 <br>
-    			 {{history.dateloan|date('d/m/Y')}}
-				 {# {{history.datereturn|date('d/m/Y')}} #}
-				 {% endfor %}
-				 {% endfor %}</p>
-			<p>
-			<img src="/ecf_symfony/src/uploads/{{data.cover}}">
-			
-			{# {{data.cover}} #}
+		<div class="d-flex flex-wrap justify-content-center">
+			<div>
+				<img id="cover" src="/ecf_symfony/src/uploads/{{data.cover}}">
+			</div>
+			<div class="d-flex flex-column ms-5">
+				<div>
+					<p>
+						<b>Etat du livre :</b>
+						{{ data.book_condition }}</p>
+					<p>
+						<b>Statu du livre :</b>
+						{% if data.status == 1 %}
+							disponible
+						{% else %}
+							emprunté par
+							{{ data.user_id.firstname }}
+							{{ data.user_id.lastname }}
+						{% endif %}
+					</p>
+				</div>
+				<div>
+					<p>
+						<b>Historique d'emprunt :</b>
+						<ul>
+							{% for history in book.getHistoricals() %}
+								{% for user in history.getUserId() %}
+									<li>
+										{{user.getFirstname()}}
+										{{user.getLastname()}}
+										du :
+										{{history.dateloan|date('d/m/Y')}}
+										au :
+										{# {{history.datereturn|date('d/m/Y')}} #}
+									</li>
+								{% endfor %}
+							{% endfor %}
+						</ul>
+					</p>
+				</div>
+			</div>
+
 		</div>
 	</div>
 {% endblock %}
