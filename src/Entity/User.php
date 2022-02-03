@@ -30,9 +30,13 @@ class User
     #[ORM\OneToMany(mappedBy: 'User_id', targetEntity: Books::class)]
     private $books_id;
 
+    #[ORM\ManyToMany(targetEntity: Historical::class, mappedBy: 'userId')]
+    private $historicals;
+
     public function __construct()
     {
         $this->books_id = new ArrayCollection();
+        $this->historicals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,5 +126,32 @@ class User
     public function __toString()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection|Historical[]
+     */
+    public function getHistoricals(): Collection
+    {
+        return $this->historicals;
+    }
+
+    public function addHistorical(Historical $historical): self
+    {
+        if (!$this->historicals->contains($historical)) {
+            $this->historicals[] = $historical;
+            $historical->addUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorical(Historical $historical): self
+    {
+        if ($this->historicals->removeElement($historical)) {
+            $historical->removeUserId($this);
+        }
+
+        return $this;
     }
 }

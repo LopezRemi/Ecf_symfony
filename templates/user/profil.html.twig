@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>profil de l'utilisateur</h1>
+
+    	<div class="d-flex justify-content-between mb-5">
+			<p>
+				<b>Prenom :</b>
+				{{ user.firstname }}</p>
+			<p>
+				<b>Nom :</b>
+				{{ user.lastname }}</p>
+			<p>
+				<b>Email :</b>
+				{{ user.email }}</p>
+			<p>
+				<b>Identifiant :</b>
+				{{ user.id }}</p>
+			<p>
+				<b>Historique :</b>
+				 {% for history in user.getHistoricals() %}
+    			 {{history.dateloan|date('d/m/Y')}}
+				 {{history.datereturn|date('d/m/Y')}}
+				 {{history.dateofreturn|date('d/m/Y')}}
+				 {% for books in history.getBookId() %}
+				 {{books.getTitle()}}
+    			 {% endfor %}
+				 {% endfor %}</p>
+			<p>
+		</div>
+
+
+
+    
+</div>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BooksRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BooksRepository::class)]
@@ -45,6 +47,17 @@ class Books
 
     #[ORM\Column(type: 'date', nullable: true)]
     private $date_return;
+
+    #[ORM\ManyToMany(targetEntity: Historical::class, mappedBy: 'bookId')]
+    private $historicals;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $cover;
+
+    public function __construct()
+    {
+        $this->historicals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +192,45 @@ class Books
     public function setDateReturn(?\DateTimeInterface $date_return): self
     {
         $this->date_return = $date_return;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Historical[]
+     */
+    public function getHistoricals(): Collection
+    {
+        return $this->historicals;
+    }
+
+    public function addHistorical(Historical $historical): self
+    {
+        if (!$this->historicals->contains($historical)) {
+            $this->historicals[] = $historical;
+            $historical->addBookId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHistorical(Historical $historical): self
+    {
+        if ($this->historicals->removeElement($historical)) {
+            $historical->removeBookId($this);
+        }
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?string $cover): self
+    {
+        $this->cover = $cover;
 
         return $this;
     }

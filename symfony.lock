@@ -221,13 +221,22 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mime": {
+        "version": "v6.0.3"
+    },
     "symfony/options-resolver": {
+        "version": "v6.0.3"
+    },
+    "symfony/password-hasher": {
         "version": "v6.0.3"
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.24.0"
     },
     "symfony/polyfill-intl-icu": {
+        "version": "v1.24.0"
+    },
+    "symfony/polyfill-intl-idn": {
         "version": "v1.24.0"
     },
     "symfony/polyfill-intl-normalizer": {
@@ -264,6 +273,27 @@
     "symfony/runtime": {
         "version": "v6.0.3"
     },
+    "symfony/security-bundle": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.3",
+            "ref": "09b5e809bd7a992061febd05b797c64a2d93b5cd"
+        },
+        "files": [
+            "./config/packages/security.yaml"
+        ]
+    },
+    "symfony/security-core": {
+        "version": "v6.0.3"
+    },
+    "symfony/security-csrf": {
+        "version": "v6.0.3"
+    },
+    "symfony/security-http": {
+        "version": "v6.0.3"
+    },
     "symfony/service-contracts": {
         "version": "v3.0.0"
     },
@@ -290,6 +320,19 @@
         "files": [
             "./config/packages/twig.yaml",
             "./templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "./config/packages/test/validator.yaml",
+            "./config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {

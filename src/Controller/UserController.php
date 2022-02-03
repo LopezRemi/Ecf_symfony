@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Historical;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,5 +78,16 @@ class UserController extends AbstractController
         return $this->renderForm('user/create.html.twig', [
         'form' => $form,
     ]);
+    }
+
+    #[Route('/user/profil/{id}', name: 'user_profil')]
+    public function profil(Request $request, ManagerRegistry $doctrine, int $id): Response
+    {   
+        $entityManager = $doctrine->getManager(); 
+        $user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$id]);
+         
+        return $this->render('user/profil.html.twig', [
+            'user' => $user,
+        ]);
     }
 }
