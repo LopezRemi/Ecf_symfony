@@ -8,12 +8,10 @@
 {% block javascripts %}{% endblock %}
 
 {% block body %}
-
-	
 	<center>
-		<h1 class="title mt-4">Liste des livres</h1>
+		<h1 class="title my-5">Liste des livres</h1>
 	</center>
-	<div class="example-wrapper">
+	<div class="example-wrapper border border-warning border-3 rounded-2 p-2">
 
 		<table id="example" class="display" style="width:100%">
 			<thead>
@@ -31,11 +29,7 @@
 			</tr>
 			</thead>
 				<tbody>
-
-				
-
 					{% for book in books %}
-
 						<tr>
 						<td id="coverListing"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}"> </td>
 						<td>{{ book.getTitle() }}</td>

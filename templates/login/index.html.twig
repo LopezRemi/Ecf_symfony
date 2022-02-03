@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!
+{% block title %}Accueil
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,7 @@
 		}
 	</style>
 
-	<div class="example-wrapper d-flex flex-column align-items-center justify-content-center mt-5">
+	<div class="example-wrapper border border-danger border-3 rounded-2 p-2 d-flex flex-column align-items-center justify-content-center mt-5">
 
 		{% if error %}
 			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
