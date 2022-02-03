@@ -36,9 +36,8 @@ security:
             
             logout:
                 path: app_logout
-
                 # where to redirect after logout
-                target: accueil
+                target: book_listing
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -47,7 +46,6 @@ security:
         - { path: ^/books, roles: ROLE_USER }
         - { path: ^/book, roles: ROLE_USER }
         - { path: ^/user, roles: ROLE_USER }
-        - { path: ^/accueil, roles: ROLE_USER }
 when@test:
     security:
         password_hashers:

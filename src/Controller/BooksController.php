@@ -22,13 +22,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    #[Route('/accueil', name: 'accueil')]
-    public function index(): Response
-    {
-        return $this->render('books/index.html.twig');
-    }
-
-
+    
     #[Route('/books/listing', name: 'books_listing')]
     public function booksListing(ManagerRegistry $doctrine): Response
     {
