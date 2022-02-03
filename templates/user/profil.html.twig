@@ -1,44 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello UserController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.bg {
+			background-image: url('../../../images/background2.jpg');
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>profil de l'utilisateur</h1>
+	<div class="example-wrapper d-flex flex-column fontText">
+		<h1 class="title my-5 d-flex justify-content-center">Profil de
+			{{ user.lastname }}
+			{{ user.firstname }}</h1>
 
-    	<div class="d-flex justify-content-between mb-5">
-			<p>
-				<b>Prenom :</b>
-				{{ user.firstname }}</p>
-			<p>
-				<b>Nom :</b>
-				{{ user.lastname }}</p>
-			<p>
-				<b>Email :</b>
-				{{ user.email }}</p>
-			<p>
-				<b>Identifiant :</b>
-				{{ user.id }}</p>
-			<p>
-				<b>Historique :</b>
-				 {% for history in user.getHistoricals() %}
-    			 {{history.dateloan|date('d/m/Y')}}
-				 {{history.datereturn|date('d/m/Y')}}
-				 {{history.dateofreturn|date('d/m/Y')}}
-				 {% for books in history.getBookId() %}
-				 {{books.getTitle()}}
-    			 {% endfor %}
-				 {% endfor %}</p>
-			<p>
+		{# CARACTÉRISTIQUES DÉTAILLÉES #}
+		<center>
+			<h2>Informations personnel :</h2>
+		</center>
+		<div class="d-flex flex-column mb-5">
+		<div class="d-flex flex-wrap justify-content-center mb-5">
+			<div class="d-flex flex-wrap border border-info border-3 p-2">
+				<p class="me-5 text-center">
+					<b>Email :
+					</b><br>
+					{{ user.email }}
+					</p>
+				<p class="me-5 text-center">
+					<b>Identifiant :
+					</b><br>
+					{{ user.id }}
+					</p>
+			</div>
+</div>
+			<center>
+				<h2>Historique :</h2>
+			</center>
+			<div class="border border-secondary border-3 p-2">
+
+				{# sous forme de tableau #}
+					<table id="example" class="display" style="width:100%"> <thead>
+						<tr>
+							<th>Titre du livre emprunté</th>
+							<th>Date d'emprunt</th>
+							<th>Date de restitution max</th>
+							<th>Date de restitution effective</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for history in user.getHistoricals() %}
+							<tr>
+								{# <td id="coverListing"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}"> </td> #}
+								<td>
+									{% for books in history.getBookId() %}
+										{{books.getTitle()}}
+									{% endfor %}
+								</td>
+								<td class="text-center">{{history.dateloan|date('d/m/Y')}}</td>
+								<td class="text-center">{{history.datereturn|date('d/m/Y')}}</td>
+								<td class="text-center">{{history.dateofreturn|date('d/m/Y')}}</td>
+
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
 
-
-
-    
-</div>
+	</div>
 {% endblock %}

@@ -18,17 +18,12 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    #[Route('/accueil', name: 'accueil')]
-    public function index(): Response
-    {
-        return $this->render('books/index.html.twig');
-    }
-
-
+    
     #[Route('/books/listing', name: 'books_listing')]
     public function booksListing(ManagerRegistry $doctrine): Response
     {
@@ -67,7 +62,7 @@ class BooksController extends AbstractController
                 'class' => 'form-control mb-4'
             ]
         ])
-        ->add('summary', TextType::class, [
+        ->add('summary', TextareaType::class, [
             'label' => 'Résumé du livre :',
             'attr' => [
                 'class' => 'form-control mb-4'

@@ -1,24 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
 
-{% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+	<style>
+		.bg {
+			background-image: url('../images/bgaccueil.jpg');
+		}
+		.example-wrapper {
+			margin: auto;
+			max-width: 80%;
+			height: 80vh;
+			width: 95%;
+			font: 22px / 1.5 sans-serif;
+		}
+	</style>
 
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Identifiant:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+	<div class="example-wrapper d-flex flex-column align-items-center justify-content-center mt-5">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+		{% if error %}
+			<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
+		<h1 class="title text-center mb-5">Bienvenue sur l'aplication des bibliothécaires</h1>
 
-        <button type="submit">login</button>
-    </form>
+		<form class="d-flex flex-column justify-content-center fontText" action="{{ path('login') }}" method="post">
 
+
+			<div class='mb-3 d-flex justify-content-between'>
+				<label class='me-2' for="username">Identifiant:</label>
+				<input type="text" id="username" name="_username" value="{{ last_username }}"/>
+			</div>
+			<div class='mb-3 d-flex justify-content-between'>
+				<label class='me-2' for="password">Mot de passe:</label>
+				<input type="password" id="password" name="_password"/>
+			</div>
+			{# If you want to control the URL the user is redirected to on success
+			        <input type="hidden" name="_target_path" value="/account"/> #}
+
+			<button class='btn btn-dark' type="submit">Se connecter</button>
+		</form>
+	</div>
 {% endblock %}

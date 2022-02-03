@@ -3,78 +3,24 @@
 {% block title %}Liste des livres
 {% endblock %}
 
-{% block stylesheets %}
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-{% endblock %}
+{% block stylesheets %}{% endblock %}
 
-{% block javascripts %}
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript">
-
-		$(document).ready(function () {
-$('#example').DataTable({
-language: {
-processing: "Traitement en cours...",
-search: "Rechercher&nbsp;:",
-lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
-info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-infoPostFix: "",
-loadingRecords: "Chargement en cours...",
-zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
-emptyTable: "Aucune donnée disponible dans le tableau",
-paginate: {
-first: "Premier",
-previous: "Pr&eacute;c&eacute;dent",
-next: "Suivant",
-last: "Dernier"
-},
-aria: {
-sortAscending: ": activer pour trier la colonne par ordre croissant",
-sortDescending: ": activer pour trier la colonne par ordre décroissant"
-}
-}
-});
-});
-	</script>
-{% endblock %}
+{% block javascripts %}{% endblock %}
 
 {% block body %}
-
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 80%;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-		#cover {
-			display: flex;
-			justify-content: center;
-			height: 100px;
-		}
-	</style>
 	<center>
-		<h1>Liste des livres</h1>
+		<h1 class="title my-5">Liste des livres</h1>
 	</center>
-	<div class="example-wrapper">
+	<div class="example-wrapper border border-secondary border-3 rounded-2 p-2">
 
-		<table id="example" class="display" style="width:100%">
+		<table id="example" class="display fontText" style="width:100%">
 			<thead>
 				<tr>
 					<th>Couverture</th>
 					<th>Titre</th>
+					<th>N° Identification</th>
 					<th>Auteur</th>
 					<th>Categorie</th>
-					{# <th>Date</th> #}
-					{# <th>Résumé</th> #}
-					{# <th>Editeur</th> #}
 					<th>état</th>
 					<th>Status</th>
 					<th>Infos</th>
@@ -84,26 +30,23 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 			</thead>
 				<tbody>
 					{% for book in books %}
-
 						<tr>
-						<td id="cover"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}"> </td>
+						<td id="coverListing"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}"> </td>
 						<td>{{ book.getTitle() }}</td>
-						<td>{{ book.getAuthor()}}</td>
-						<td>{{ book.getCategory()}}</td>
-						{# <td>{{ book.getReleaseDate()|date('d/m/Y') }}</td> #}
-						{# <td>{{ book.getSummary() }}</td> #}
-						{# <td>{{ book.getEditor()}}</td> #}
-						<td>{{ book.getBookCondition()}}</td>
-						<td>
+						<td class="text-center">{{ book.getId()}}</td>
+						<td class="text-center">{{ book.getAuthor()}}</td>
+						<td class="text-center">{{ book.getCategory()}}</td>
+						<td class="text-center">{{ book.getBookCondition()}}</td>
+						<td class="text-center">
 							{% if book.getStatus() == 1 %}
 								disponible
 							{% else %}
 								emprunté
 							{% endif %}
 						</td>
-						<td>
-							<a class="btn btn-info" href="{{ path('book_description', {'id': book.getId()} )}}">
-								Plus d'info
+						<td class="">
+							<a class="btn btn-info w-100" href="{{ path('book_description', {'id': book.getId()} )}}">
+								Infos
 							</a>
 						</td>
 						<td>
