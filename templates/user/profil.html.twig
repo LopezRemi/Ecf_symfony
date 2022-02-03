@@ -10,7 +10,7 @@
 		}
 	</style>
 
-	<div class="example-wrapper d-flex flex-column ">
+	<div class="example-wrapper d-flex flex-column fontText">
 		<h1 class="title my-5 d-flex justify-content-center">Profil de
 			{{ user.lastname }}
 			{{ user.firstname }}</h1>
@@ -20,46 +20,24 @@
 			<h2>Informations personnel :</h2>
 		</center>
 		<div class="d-flex flex-column mb-5">
-			<div class="d-flex flex-wrap justify-content-center border border-info border-3 p-2 mb-5">
+		<div class="d-flex flex-wrap justify-content-center mb-5">
+			<div class="d-flex flex-wrap border border-info border-3 p-2">
 				<p class="me-5 text-center">
 					<b>Email :
 					</b><br>
-					{{ user.email }}</p>
+					{{ user.email }}
+					</p>
 				<p class="me-5 text-center">
 					<b>Identifiant :
 					</b><br>
-					{{ user.id }}</p>
+					{{ user.id }}
+					</p>
 			</div>
-
+</div>
 			<center>
 				<h2>Historique :</h2>
 			</center>
-			<div class="border border-warning border-3 p-2">
-
-				{# <ul>
-													{% for history in user.getHistoricals() %}
-														<li>
-															<b>Titre du livre emprunté :</b><br>
-															{% for books in history.getBookId() %}
-																{{books.getTitle()}}
-															{% endfor %}
-														</li>
-								
-														<li>
-															<b>Date d'emprunt :</b><br>
-															{{history.dateloan|date('d/m/Y')}}
-														</li>
-														<li>
-															<b>Date de restitution max :</b><br>
-															{{history.datereturn|date('d/m/Y')}}
-														</li>
-														<li>
-															<b>Date de restitution effective :</b><br>
-															{{history.dateofreturn|date('d/m/Y')}}
-														</li>
-													{% endfor %}
-												</ul> #}
-
+			<div class="border border-secondary border-3 p-2">
 
 				{# sous forme de tableau #}
 					<table id="example" class="display" style="width:100%"> <thead>
