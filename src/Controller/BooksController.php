@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
 {
-    
+
     #[Route('/books/listing', name: 'books_listing')]
     public function booksListing(ManagerRegistry $doctrine): Response
     {
@@ -43,88 +43,89 @@ class BooksController extends AbstractController
         $book = new Books();
         $book->setStatus(true);
         $form = $this->createFormBuilder($book)
-        ->add('title', TextType::class, [
-            'label' => 'Titre du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-         ])
-        ->add('author', TextType::class, [
-            'label' => 'Auteur du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-        ])
-        ->add('release_date', DateType::class, [
-            'label' => 'Date de parution du livre :',
-            'widget' => 'single_text',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-        ])
-        ->add('summary', TextareaType::class, [
-            'label' => 'Résumé du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-        ])
-        ->add('category', TextType::class, [
-            'label' => 'Genre du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-        ])
-        ->add('editor', TextType::class, [
-            'label' => 'Editeur du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-        ])
-        ->add('status', ChoiceType::class, [
-            'label' => 'Disponibilité du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ],
-            'choices' => [
-                'Emprunte' => '0',  // 0 quand emprunter
-                'Disponible' => '1', // 1 quand disponible
-            ],
-        ])
-        ->add('book_condition', ChoiceType::class, [
-            'label' => 'Etat du livre :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ],
-            'choices' => [
-                'bon' => 'Bon état',
-                'passable' => 'Etat passable',
-                'mauvais' => 'Mauvais état',
-            ],
-        ])
-        ->add('cover', FileType::class, [
-            'label' => 'Votre cover :',
-            'mapped' => false,
-            'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '512k',
-                    'mimeTypes' => [
-                        'image/jpg',
-                        'image/jpeg',
-                        'image/svg',
-                        'image/png',
-                    ],
-                    'mimeTypesMessage' => 'Merci de choisir un cover valide ".jpg ,.jpeg ,.svg ,.png" et inférieur à 512Ko.',
-                ])
-            ],
-        ])
-        ->add('save', SubmitType::class, [
-            'label' => 'Créé le livre',
-            'attr' => [
-                'class' => 'btn btn-primary'
-                ]])
-        ->getForm();
-    
+            ->add('title', TextType::class, [
+                'label' => 'Titre du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('author', TextType::class, [
+                'label' => 'Auteur du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('release_date', DateType::class, [
+                'label' => 'Date de parution du livre :',
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('summary', TextareaType::class, [
+                'label' => 'Résumé du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('category', TextType::class, [
+                'label' => 'Genre du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('editor', TextType::class, [
+                'label' => 'Editeur du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ]
+            ])
+            ->add('status', ChoiceType::class, [
+                'label' => 'Disponibilité du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ],
+                'choices' => [
+                    'Emprunte' => '0',  // 0 quand emprunter
+                    'Disponible' => '1', // 1 quand disponible
+                ],
+            ])
+            ->add('book_condition', ChoiceType::class, [
+                'label' => 'Etat du livre :',
+                'attr' => [
+                    'class' => 'form-control mb-4'
+                ],
+                'choices' => [
+                    'bon' => 'Bon état',
+                    'passable' => 'Etat passable',
+                    'mauvais' => 'Mauvais état',
+                ],
+            ])
+            ->add('cover', FileType::class, [
+                'label' => 'Votre cover :',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '512k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/svg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Merci de choisir un cover valide ".jpg ,.jpeg ,.svg ,.png" et inférieur à 512Ko.',
+                    ])
+                ],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Créé le livre',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ])
+            ->getForm();
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -135,7 +136,7 @@ class BooksController extends AbstractController
             if ($coverFile) {
                 $originalFilename = pathinfo($coverFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$coverFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $coverFile->guessExtension();
                 $coverFile->move(
                     $this->getParameter('uploads_directory'),
                     $newFilename
@@ -152,8 +153,8 @@ class BooksController extends AbstractController
         }
 
         return $this->renderForm('books/create.html.twig', [
-        'form' => $form,
-    ]);
+            'form' => $form,
+        ]);
     }
 
     #[Route('/book/delete/{id}', name: 'book_delete')]
@@ -161,12 +162,12 @@ class BooksController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $book = $entityManager->getRepository(Books::class)->find($id);
-        
 
-        foreach ($book->getHistoricals() as $historical ){
+
+        foreach ($book->getHistoricals() as $historical) {
             $entityManager->remove($historical);
         }
-        
+
         $entityManager->remove($book);
         $entityManager->flush();
 
@@ -179,8 +180,8 @@ class BooksController extends AbstractController
     public function description(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
-        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-        
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id' => $id]);
+
 
         $data = [
             'id' => $book->getId(),
@@ -194,14 +195,14 @@ class BooksController extends AbstractController
             'status' => $book->getStatus(),
             'user_id' => $book->getUserId(),
             'cover' => $book->getCover(),
-            
+
         ];
 
         if (!$book) {
             throw $this->createNotFoundException(
                 "Livre non trouvé pour l'id " . $id
             );
-        }        
+        }
 
         return $this->render('books/description.html.twig', [
             'data' => $data,
@@ -213,26 +214,26 @@ class BooksController extends AbstractController
     public function loan(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
-        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-        $book->setDateEmprunt(new \DateTime('now'));
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id' => $id]);
 
         $form = $this->createFormBuilder($book)
-        ->add('user_id', EntityType::class, [
-            'label' => 'Utilisateur emprunteur :',
-            'class' => User::class,
-            'attr' => ['class'=> 'form-control mb-4']
-        ])
-        ->add('save', SubmitType::class, [
-            'label' => 'Validation de l\'emprunt',
-            'attr' => [
-                'class' => 'btn btn-primary'
-                ]])
-        ->getForm();
+            ->add('user_id', EntityType::class, [
+                'label' => 'Utilisateur emprunteur :',
+                'class' => User::class,
+                'attr' => ['class' => 'form-control mb-4']
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Validation de l\'emprunt',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ])
+            ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $update = $form->getData();
-            
+
             $book->setUserId($update->getUserId());
             $book->setStatus(0);
 
@@ -241,7 +242,7 @@ class BooksController extends AbstractController
             $history->setDateReturn(new \DateTime('+15 days'));
             $history->addUserId($update->getUserId());
             $history->addBookId($book);
-            
+
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($history);
@@ -252,23 +253,26 @@ class BooksController extends AbstractController
         }
         return $this->render('books/loan.html.twig', [
             'form' => $form->createView(),
-    ]);
+        ]);
     }
 
     #[Route('/book/return/{id}', name: 'book_return')]
-    public function bookReturn(Request $request, ManagerRegistry $doctrine, int $id): Response
+    public function bookReturn(Request $request, ManagerRegistry $doctrine, int $id,): Response
     {
         $entityManager = $doctrine->getManager();
-        $book = $entityManager->getRepository(Books::class)->findOneBy(['id'=> $id]);
-        $historical = $entityManager->getRepository(Historical::class)->findOneBy(['id'=> $id]);
-        $historical->setDateOfReturn(new \DateTime('now'));
+        $book = $entityManager->getRepository(Books::class)->findOneBy(['id' => $id,]);
+        
+        foreach ($book->getHistoricals() as $historical) {
+            $historical->setDateOfReturn(new \DateTime('now'));
+        }
+
         $book->setStatus(1);
 
         $entityManager = $doctrine->getManager();
-            $entityManager->persist($book);
-            $entityManager->flush();
+        $entityManager->persist($book);
+        $entityManager->flush();
 
         $this->addFlash('success', 'Livre rendu avec succes');
-            return $this->redirectToRoute('books_listing');
+        return $this->redirectToRoute('books_listing');
     }
 }

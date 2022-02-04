@@ -42,11 +42,6 @@ class Books
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'books_id')]
     private $User_id;
 
-    #[ORM\Column(type: 'date', nullable: true)]
-    private $date_emprunt;
-
-    #[ORM\Column(type: 'date', nullable: true)]
-    private $date_return;
 
     #[ORM\ManyToMany(targetEntity: Historical::class, mappedBy: 'bookId')]
     private $historicals;
@@ -172,29 +167,7 @@ class Books
         return $this;
     }
 
-    public function getDateEmprunt(): ?\DateTimeInterface
-    {
-        return $this->date_emprunt;
-    }
-
-    public function setDateEmprunt(?\DateTimeInterface $date_emprunt): self
-    {
-        $this->date_emprunt = $date_emprunt;
-
-        return $this;
-    }
-
-    public function getDateReturn(): ?\DateTimeInterface
-    {
-        return $this->date_return;
-    }
-
-    public function setDateReturn(?\DateTimeInterface $date_return): self
-    {
-        $this->date_return = $date_return;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|Historical[]
