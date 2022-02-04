@@ -10,6 +10,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
 href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 {# tableau #}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
@@ -45,12 +51,10 @@ href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family
 			width: 80%;
 			font: 18px / 1.5 sans-serif;
 		}
-		.title {
-			font-family: 'Libre Baskerville', serif;
-		}
 		.fontText {
-			font-family: 'Source Code Pro', monospace;
+			font-family: 'Kaushan Script', cursive;
 		}
+		
 		.wrapper {
 			margin: auto;
 			max-width: 80%;
@@ -59,6 +63,10 @@ href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family
 			font: 22px / 1.5 sans-serif;
 			padding-top: 200px;
 			
+		}
+		.fontLogin {
+			font-family: 'Great Vibes', cursive;
+			font-size : 300%
 		}
 	</style>
 
@@ -73,17 +81,17 @@ href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family
 		{% endif %}
 
 		
-		<h1 class="title text-center mb-5">Bienvenue sur l'application des bibliothécaires</h1>
+		<h1 class="fontLogin text-center mb-5">Bienvenue sur l'application des bibliothécaires</h1>
 
 		<form class="d-flex flex-column justify-content-center fontText" action="{{ path('login') }}" method="post">
 
 
 			<div class='mb-3 d-flex justify-content-between'>
-				<label class='me-2' for="username">Identifiant:</label>
+				<label class='me-2' for="username">Identifiant :</label>
 				<input type="text" id="username" name="_username" value="{{ last_username }}"/>
 			</div>
 			<div class='mb-3 d-flex justify-content-between'>
-				<label class='me-2' for="password">Mot de passe:</label>
+				<label class='me-2' for="password">Mot de passe :</label>
 				<input type="password" id="password" name="_password"/>
 			</div>
 			{# If you want to control the URL the user is redirected to on success
