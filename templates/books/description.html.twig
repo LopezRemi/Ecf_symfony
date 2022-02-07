@@ -11,7 +11,7 @@
 	</style>
 	<div class="presentation-livre d-flex flex-column justify-content-center">
 		<div class="d-flex flex-wrap justify-content-center mb-5">
-			<h1 class="title mb-5">{{ data.title }}</h1>
+			<h1 class="title mb-5 marginTitle">{{ data.title }}</h1>
 			<p>
 				<b>Résumé :</b>
 				{{ data.summary }}</p>
@@ -66,7 +66,9 @@
 										du :
 										{{history.dateloan|date('d/m/Y')}}
 										au :
+										{% if history.dateofreturn %}
 										{{history.dateofreturn|date('d/m/Y')}}
+										{% endif %}
 									</li>
 								{% endfor %}
 							{% endfor %}
