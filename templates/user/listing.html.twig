@@ -2,17 +2,27 @@
 
 {% block title %}Liste des emprunteurs{% endblock %}
 
-{% block stylesheets %}{% endblock %}
-
+{% block stylesheets %}
+	<style>
+		.bg {
+			background-image: url('../../images/user.jpg');
+			background-size: cover;
+		}
+        .wrapper{
+            background-color: #f5f5f5 !important;
+        }
+        
+	</style>
+{% endblock %}
 {% block javascripts %}{% endblock %}
 
 {% block body %}
 
 <center>
-		<h1 class="title my-5">Liste des emprunteurs</h1>
+		<h1 class="title my-5" style="color: #d3d0d0;">Liste des emprunteurs</h1>
 	</center>
-<div class="example-wrapper border border-secondary border-3 rounded-2 p-2">
-<table id="example" class="display fontText" style="width:100%">
+<div class="wrapper border border-secondary border-3 rounded-2 p-2">
+<table id="tableListing" class="display fontText" style="width:100%;">
         <thead>
             <tr>
                 <th>Prénom</th>
@@ -31,9 +41,7 @@
             <td>
             <a class="btn btn-info" href="{{ path('user_profil', {'id': user.getId()} )}}">
 								Plus d'info
-							</a>
-            {# <td>{{ user.getbooksId(title)}}</td> #}
-          
+							</a>          
             </td>
 		</tr>
 	{% endfor %}

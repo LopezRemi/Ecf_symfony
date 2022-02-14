@@ -195,7 +195,6 @@ class BooksController extends AbstractController
             'status' => $book->getStatus(),
             'user_id' => $book->getUserId(),
             'cover' => $book->getCover(),
-
         ];
 
         if (!$book) {

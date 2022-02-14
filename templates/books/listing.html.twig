@@ -3,7 +3,17 @@
 {% block title %}Liste des livres
 {% endblock %}
 
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+	<style>
+		.bg {
+			background-image: url('../../images/manybook.jpg');
+			background-size: cover;
+		}
+		.wrapper {
+				background-color: #d4c9bcf4;
+			}
+	</style>
+{% endblock %}
 
 {% block javascripts %}{% endblock %}
 
@@ -11,9 +21,9 @@
 	<center>
 		<h1 class="title my-5">Liste des livres</h1>
 	</center>
-	<div class="example-wrapper border border-secondary border-3 rounded-2 p-2">
+	<div class="wrapper border border-light border-3 rounded-3 p-2">
 
-		<table id="example" class="display fontText" style="width:100%">
+		<table id="tableListing" class="display fontText" style="width:100%">
 			<thead>
 				<tr>
 					<th>Couverture</th>
@@ -26,12 +36,13 @@
 					<th>Infos</th>
 					<th>Emprunt</th>
 					<th>Supression</th>
-			</tr>
+				</tr>
 			</thead>
-				<tbody>
-					{% for book in books %}
-						<tr>
-						<td id="coverListing"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}"> </td>
+			<tbody>
+				{% for book in books %}
+					<tr>
+						<td id="coverListing"><img src="/ecf_symfony/src/uploads/{{ book.getCover() }}">
+						</td>
 						<td>{{ book.getTitle() }}</td>
 						<td class="text-center">{{ book.getId()}}</td>
 						<td class="text-center">{{ book.getAuthor()}}</td>
@@ -44,7 +55,7 @@
 								emprunté
 							{% endif %}
 						</td>
-						<td class="">
+						<td>
 							<a class="btn btn-info w-100" href="{{ path('book_description', {'id': book.getId()} )}}">
 								Infos
 							</a>

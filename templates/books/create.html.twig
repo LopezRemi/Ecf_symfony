@@ -5,11 +5,16 @@
 
 {% block body %}
 	<style>
-		.example-wrapper {
+		.bg {
+			background-image: url('../../images/manybook.jpg');
+			background-size: cover;
+		}
+		.wrapper {
 			margin: 1em auto;
 			max-width: 900px;
 			width: 80%;
 			font: 18px / 1.5 sans-serif;
+			background: white;
 		}
 	</style>
 
@@ -17,7 +22,7 @@
 		<h1 class="title my-5">Ajout d'un livre</h1>
 	</center>
 
-	<div class="example-wrapper fontText border border-secondary border-3 rounded-2 p-3">
+	<div class="wrapper fontText border border-secondary border-3 rounded-2 p-3">
 		<div class="d-flex flex-wrap col-12 justify-content-around fontText">
 			<div class="col-5">
 				{{ form_start(form) }}
