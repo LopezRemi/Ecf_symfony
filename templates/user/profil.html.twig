@@ -6,41 +6,50 @@
 {% block body %}
 	<style>
 		.bg {
-			background-image: url('../../../images/background2.jpg');
+			background-image: url('../../../images/user.jpg');
+			background-size: cover;
+		}
+		.wrapper {
+			margin: 1em auto;
+			max-width: 1000px;
+			width: 75%;
+			font: 18px / 1.5 sans-serif;
 		}
 	</style>
 
-	<div class="marginUser example-wrapper d-flex flex-column fontText">
-		<h1 class="title my-5 d-flex justify-content-center">Profil de
+	<div class="wrapper d-flex flex-column fontText">
+		<h1 class="title my-5 d-flex justify-content-center" style="color: white;">Profil de
 			{{ user.lastname }}
 			{{ user.firstname }}</h1>
 
 		{# CARACTÉRISTIQUES DÉTAILLÉES #}
 		<center>
-			<h2>Informations personnel :</h2>
+			<h2 style="color: white;">Informations personnel :</h2>
 		</center>
 		<div class="d-flex flex-column mb-5">
-		<div class="d-flex flex-wrap justify-content-center mb-5">
-			<div class="d-flex flex-wrap border  border-3 p-2">
-				<p class="me-5 text-center">
-					<b>Email :
-					</b><br>
-					{{ user.email }}
+			<div class="d-flex flex-wrap justify-content-center mb-5">
+				<div class="d-flex flex-wrap border border-3 p-2" style="background-color: white;">
+					<p class="me-5 text-center">
+						<b>Email :
+						</b><br>
+						{{ user.email }}
 					</p>
-				<p class="me-5 text-center">
-					<b>Identifiant :
-					</b><br>
-					{{ user.id }}
+					<p class="me-5 text-center">
+						<b>Identifiant :
+						</b><br>
+						{{ user.id }}
 					</p>
+				</div>
 			</div>
-</div>
-			<center>
-				<h2>Historique :</h2>
-			</center>
-			<div class="border border-secondary border-3 p-2">
+				<center>
+					<h2 style="color: white;">Historique :</h2>
+				</center>
+			<div
+				class="border border-secondary border-3 p-2" style="background: white;">
 
 				{# sous forme de tableau #}
-					<table id="example" class="display" style="width:100%"> <thead>
+				<table id="tableListing" class="display" style="width:100%;">
+					<thead>
 						<tr>
 							<th>Titre du livre emprunté</th>
 							<th>Date d'emprunt</th>
