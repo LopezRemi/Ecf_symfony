@@ -15,8 +15,7 @@
 	{# tableau #}
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
-		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
+		{% block stylesheets %} {{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -49,8 +48,7 @@
 				});
 			});
 		</script>
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
+		{% block javascripts %} {{ encore_entry_script_tags('app') }}
 		{% endblock %}
 		<style>
 			.wrapper {
@@ -74,6 +72,12 @@
 				/* font-family: 'Source Code Pro', monospace; */
 				font-family: 'Kaushan Script', cursive;
 			}
+			.marginTitle{
+				margin-top: 8%;
+			}
+			.marginUser{
+				margin-top: 6%;
+			}
 			.navbar {
 				background-color: #d4c9bcd4;
 				box-shadow: 0 2px 20px;
@@ -85,7 +89,7 @@
 			}
 		</style>
 	</head>
-	<body class="bg">
+	<body class="">
 
 		<nav class="navbar navbar-light fontText">
 			<div class="container-fluid d-flex justify-content-around">
@@ -97,22 +101,61 @@
 					<a class="btn btn-danger my-3" href="{{path('app_logout')}}">
 						Deconnexion
 					</a>
-				{% endif %}
-			</div>
-		</nav>
+					<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<i class="fas fa-bars"></i>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('books_listing' )}}">Liste des livres</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('users_listing' )}}">Liste des emprunteurs</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('book_create' )}}">Ajouter un livre</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('user_create' )}}">Ajouter un emprunteur</a>
+							</li>
+							<li class="nav-item">
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<a style="color: #F00020;" class="nav-link" href="{{path('app_logout')}}">Deconnexion</a>
+								{% endif %}
+							</li>
+						</div>
+					</div>
+				</nav>
+				<!-- Navbar -->
+			</header>
 
-		{% for message in app.flashes('success') %}
-			<div class="alert alert-success">
-				<h3 class="d-flex justify-content-center">{{message}}</h3>
-			</div>
-		{% endfor %}
+			{# <nav class="navbar  navbar-light">
+				<div class="container-fluid d-flex justify-content-around">
+					<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('books_listing' )}}">Liste des livres</a>
+					<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('users_listing' )}}">Liste des emprunteurs</a>
+					<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('book_create' )}}">Ajouter un livre</a>
+					<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('user_create' )}}">Ajouter un emprunteur</a>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<a class="btn btn-danger my-3" href="{{path('app_logout')}}">
+							Deconnexion
+						</a>
+					{% endif %}
+				</div>
+			</nav> #}
 
-		{% for message in app.flashes('danger') %}
-			<div class="alert alert-danger">
-				<h3 class="d-flex justify-content-center">{{message}}</h3>
-			</div>
-		{% endfor %}
-		{% block body %}{% endblock %}
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					<h3 class="d-flex justify-content-center">{{message}}</h3>
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('danger') %}
+				<div class="alert alert-danger">
+					<h3 class="d-flex justify-content-center">{{message}}</h3>
+				</div>
+			{% endfor %}
+			{% block body %}{% endblock %}
+		</body>
 	</body>
 </html>
 
