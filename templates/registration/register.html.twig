@@ -3,8 +3,9 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1>Enregistrement bibliothécaires</h1>
 
+{# FORMULAIRE D'ENREGISTREMENT BIBLIOTHECAIRES #}
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.plainPassword, {

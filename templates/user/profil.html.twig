@@ -18,6 +18,7 @@
 	</style>
 
 	<div class="wrapper d-flex flex-column fontText">
+	{# TITRE DE LA PAGE #}
 		<h1 class="title my-5 d-flex justify-content-center" style="color: white;">Profil de
 			{{ user.lastname }}
 			{{ user.firstname }}</h1>
@@ -44,10 +45,9 @@
 				<center>
 					<h2 style="color: white;">Historique :</h2>
 				</center>
-			<div
-				class="border border-secondary border-3 p-2" style="background: white;">
 
-				{# sous forme de tableau #}
+			<div class="border border-secondary border-3 p-2" style="background: white;">
+				{# AFFICHAGE TABLEAU HISTORIQUE #}
 				<table id="tableListing" class="display" style="width:100%;">
 					<thead>
 						<tr>

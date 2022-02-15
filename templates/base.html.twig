@@ -7,18 +7,19 @@
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-		{# font styles #}
-		<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Code+Pro&display=swap" rel="stylesheet"> <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-		<link
-		href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-		{# tableau #}
+
+{# FONT STYLE #}
+		<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Code+Pro&display=swap" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+{# TABLEAU STYLE #}
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
+{# MISE EN PLACE DU FORMATEUR DE TABLEAU #}
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript">
@@ -50,6 +51,7 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 });
 		</script>
 
+{# CSS POUR TOUTES LES PAGES #}
 		<style>
 			.wrapper {
 				margin: 1em auto;
@@ -91,6 +93,8 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 	</head>
 
 	<body class="bg">
+
+{# BARRE DE NAVIGATION #}
 		<nav class="navbar navbar-light fontText">
 			<div class="container-fluid d-flex justify-content-around">
 				<a class="navbar-brand" href="{{ path('books_listing' )}}">Liste des livres</a>
@@ -128,22 +132,8 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 				</div>
 			</div>
 		</nav>
-		<!-- Navbar -->
-
-		{# <nav class="navbar  navbar-light">
-																									<div class="container-fluid d-flex justify-content-around">
-																										<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('books_listing' )}}">Liste des livres</a>
-																										<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('users_listing' )}}">Liste des emprunteurs</a>
-																										<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('book_create' )}}">Ajouter un livre</a>
-																										<a class="navbar-brand" style="color: #dc3545; font-weight: bolder;" href="{{ path('user_create' )}}">Ajouter un emprunteur</a>
-																										{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-																											<a class="btn btn-danger my-3" href="{{path('app_logout')}}">
-																												Deconnexion
-																											</a>
-																										{% endif %}
-																									</div>
-																								</nav> #}
-
+		
+{# MESSAGES FLASH #}
 		{% for message in app.flashes('success') %}
 			<div class="alert alert-success">
 				<h3 class="d-flex justify-content-center">{{message}}</h3>
@@ -157,6 +147,7 @@ sortDescending: ": activer pour trier la colonne par ordre décroissant"
 		{% endfor %}
 		{% block body %}{% endblock %}
 
+{# SCRIPT BOOTSTRAP #}
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	</body>
 </html></body></html>

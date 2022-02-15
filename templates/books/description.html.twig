@@ -29,46 +29,46 @@
 
 	<div class="presentation-livre d-flex flex-column justify-content-center">
 		<div class="d-flex flex-wrap justify-content-center mb-5">
-			<h1 class="title mb-5 marginTitle">{{ data.title }}</h1>
+			<h1 class="title mb-5 marginTitle">{{ book.title }}</h1>
 			<p>
 				<b>Résumé :</b>
-				{{ data.summary }}</p>
+				{{ book.summary }}</p>
 		</div>
 
 		{# CARACTÉRISTIQUES DÉTAILLÉES #}
 		<div class="d-flex justify-content-between mb-5">
 			<p>
 				<b>Auteur :</b>
-				{{ data.author }}</p>
+				{{ book.author }}</p>
 			<p>
 				<b>Date de parution :</b>
-				{{ data.release_date|date('d/m/Y') }}</p>
+				{{ book.getReleaseDate()|date('d/m/Y') }}</p>
 			<p>
 				<b>Categorie :</b>
-				{{ data.category }}</p>
+				{{ book.category }}</p>
 			<p>
 				<b>Editeur :</b>
-				{{ data.editor }}</p>
+				{{ book.editor }}</p>
 		</div>
 
 		{# Etat du livre et de son emprunt #}
 		<div class="d-flex flex-wrap justify-content-center fontText">
 			<div>
-				<img id="coverPresentation" src="/ecf_symfony/src/uploads/{{data.cover}}">
+				<img id="coverPresentation" src="/ecf_symfony/src/uploads/{{book.cover}}">
 			</div>
 			<div class="d-flex flex-column ms-5">
 				<div>
 					<p>
 						<b>Etat du livre :</b>
-						{{ data.book_condition }}</p>
+						{{ book.getBookCondition() }}</p>
 					<p>
 						<b>Statu du livre :</b>
-						{% if data.status == 1 %}
+						{% if book.status == 1 %}
 							disponible
 						{% else %}
 							emprunté par
-							{{ data.user_id.firstname }}
-							{{ data.user_id.lastname }}
+							{{ book.user_id.firstname }}
+							{{ book.user_id.lastname }}
 						{% endif %}
 					</p>
 				</div>
