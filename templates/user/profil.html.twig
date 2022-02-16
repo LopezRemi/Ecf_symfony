@@ -1,21 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!
+{% block title %}
+	Profil utilisateur
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/profil.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
 {% endblock %}
 
 {% block body %}
-	<style>
-		.bg {
-			background-image: url('../../../images/user.jpg');
-			background-size: cover;
-		}
-		.wrapper {
-			margin: 1em auto;
-			max-width: 1000px;
-			width: 75%;
-			font: 18px / 1.5 sans-serif;
-		}
-	</style>
 
 	<div class="wrapper d-flex flex-column fontText">
 	{# TITRE DE LA PAGE #}

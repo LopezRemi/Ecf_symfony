@@ -1,23 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout de livre
+{% block title %}
+	Ajout de livre
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/bookCreate.css')}}">
 {% endblock %}
 
 {% block body %}
-	<style>
-		.bg {
-			background-image: url('../../images/manybook.jpg');
-			background-size: cover;
-		}
-		.wrapper {
-			margin: 1em auto;
-			max-width: 900px;
-			width: 80%;
-			font: 18px / 1.5 sans-serif;
-			background: white;
-		}
-	</style>
-
 	<center class="marginTitle">
 		<h1 class="title my-5 ">Ajout d'un livre</h1>
 	</center>

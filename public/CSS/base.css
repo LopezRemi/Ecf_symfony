@@ -1,0 +1,28 @@
+.wrapper {
+    margin: 1em auto;
+    width: 80%;
+    font: 18px / 1.5 sans-serif;
+}
+.title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4em;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.fontText {
+    font-family: 'Kaushan Script', cursive;
+}
+.navbar {
+    background-color: #d4c9bcd4;
+    box-shadow: 0 2px 20px;
+}
+.navbar-brand {
+    color: #dc3545;
+    font-weight: bolder;
+    font-size: 170%;
+}
+#coverListing {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+}

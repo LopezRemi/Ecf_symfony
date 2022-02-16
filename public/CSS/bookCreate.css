@@ -1,0 +1,7 @@
+.bg {
+    background-image: url('../images/manybook.jpg');
+    background-size: cover;
+}
+.wrapper {
+    background: #d4c9bcf4 !important;
+}

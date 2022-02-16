@@ -4,22 +4,17 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<style>
-		.bg {
-			background-image: url('../../images/manybook.jpg');
-			background-size: cover;
-		}
-		.wrapper {
-				background-color: #d4c9bcf4;
-			}
-	</style>
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/bookList.css')}}">
 {% endblock %}
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+{% endblock %}
 
 {% block body %}
 	<center>
-		<h1 class="title marginTitle">Liste des livres</h1>
+		<h1 class="title my-5">Liste des livres</h1>
 	</center>
 	<div class="wrapper border border-light border-3 rounded-3 p-2">
 

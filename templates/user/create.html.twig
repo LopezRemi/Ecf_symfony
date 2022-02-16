@@ -3,22 +3,14 @@
 {% block title %}Ajout d'emprunteur
 {% endblock %}
 
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/userCreate.css')}}">
+{% endblock %}
+
 {% block body %}
-	<style>
-		.bg {
-			background-image: url('../../images/user.jpg');
-			background-size: cover;
-		}
-		.wrapper {
-			margin: 1em auto;
-			max-width: 900px;
-			width: 75%;
-			font: 18px / 1.5 sans-serif;
-			background: white;
-		}
-	</style>
 	<center>
-		<h1 class="title my-5" style="color: white;">Ajout d'un emprunteur</h1>
+		<h1 class="title my-5" style="color: #d3d0d0;">Ajout d'un emprunteur</h1>
 	</center>
 	
 {# AFFICHAGE DU FORMULAIRE DE CREATION D'UTILISATEUR  #}

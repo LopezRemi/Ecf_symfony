@@ -124,6 +124,9 @@
             "./public/.htaccess"
         ]
     },
+    "symfony/asset": {
+        "version": "v6.0.3"
+    },
     "symfony/cache": {
         "version": "v6.0.3"
     },

@@ -1,0 +1,7 @@
+.bg {
+    background-image: url('../images/user.jpg');
+    background-size: cover;
+}
+.wrapper{
+    background-color: #f5f5f5;
+}

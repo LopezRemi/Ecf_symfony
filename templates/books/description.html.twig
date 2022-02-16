@@ -1,32 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Description du livre
+{% block title %}
+	Description du livre
 {% endblock %}
+
 {% block stylesheets %}
-	<style>
-		.bg {
-			background-image: url('../../../images/books.jpg');
-			background-size: cover;
-		}
-		.presentation-livre {
-			margin: 1em auto;
-			max-width: 1000px;
-			width: 80%;
-			font: 18px / 1.5 sans-serif;
-			background-color: #d4c9bcf4;
-			border-radius: 15px;
-			padding: 1em;
-		}
-		#coverPresentation {
-			display: flex;
-			justify-content: center;
-			height: 500px;
-		}
-	</style>
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/bookDescript.css')}}">
 {% endblock %}
 
 {% block body %}
-
 	<div class="presentation-livre d-flex flex-column justify-content-center">
 		<div class="d-flex flex-wrap justify-content-center mb-5">
 			<h1 class="title mb-5 marginTitle">{{ book.title }}</h1>
@@ -67,8 +50,8 @@
 							disponible
 						{% else %}
 							emprunté par
-							{{ book.user_id.firstname }}
-							{{ book.user_id.lastname }}
+							{{ book.getUserId().firstname }}
+							{{ book.getUserId().lastname }}
 						{% endif %}
 					</p>
 				</div>

@@ -1,18 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Nouveau bibliothécaire
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="{{asset('CSS/userCreate.css')}}">
+{% endblock %}
 
 {% block body %}
-    <h1>Enregistrement bibliothécaires</h1>
+	{# AFFICHAGE DU FORMULAIRE DE CREATION DE BIBLIOTHECAIRE  #}
+	<center>
+		<h1 class="title my-5" style="color: #d3d0d0;">Enregistrement de bibliothécaire</h1>
+	</center>
 
-{# FORMULAIRE D'ENREGISTREMENT BIBLIOTHECAIRES #}
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+	<div class="fontText wrapper d-flex justify-content-center border border-secondary border-3 rounded-2 p-3 fontText">
+		<div class="d-flex flex-wrap col-10 justify-content-around fontText">
+			<div class="col-6 d-flex justify-content-center mb-4">
+				{{ form_start(registrationForm) }}
+				{{ form_row(registrationForm.username) }}
+			</div>
+			<div class="col-6 d-flex justify-content-center mb-4">
+				{{ form_row(registrationForm.plainPassword) }}
+			</div>
+			<div class="col-12 d-flex justify-content-center">
+				{{ form_row(registrationForm.agreeTerms) }}
+			</div>
+			<div class="col-12 d-flex justify-content-center">
+				<button type="submit" class="btn btn-info mt-4">Enregistrer</button>
+			</div>
+			{{ form_end(registrationForm) }}
+		</div>
+	</div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}
