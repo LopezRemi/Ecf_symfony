@@ -2,23 +2,17 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\User;
 use App\Entity\Books;
 use App\Entity\Historical;
+use App\Form\BooksCreateFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BooksController extends AbstractController
@@ -41,91 +35,7 @@ class BooksController extends AbstractController
         $entityManager = $doctrine->getManager();
         // cree l'objet book$book et initialise les datas
         $book = new Books();
-        $book->setStatus(true);
-        $form = $this->createFormBuilder($book)
-            ->add('title', TextType::class, [
-                'label' => 'Titre du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('author', TextType::class, [
-                'label' => 'Auteur du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('release_date', DateType::class, [
-                'label' => 'Date de parution du livre :',
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('summary', TextareaType::class, [
-                'label' => 'Résumé du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('category', TextType::class, [
-                'label' => 'Genre du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('editor', TextType::class, [
-                'label' => 'Editeur du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ]
-            ])
-            ->add('status', ChoiceType::class, [
-                'label' => 'Disponibilité du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ],
-                'choices' => [
-                    'Emprunte' => '0',  // 0 quand emprunter
-                    'Disponible' => '1', // 1 quand disponible
-                ],
-            ])
-            ->add('book_condition', ChoiceType::class, [
-                'label' => 'Etat du livre :',
-                'attr' => [
-                    'class' => 'form-control mb-4'
-                ],
-                'choices' => [
-                    'bon' => 'Bon état',
-                    'passable' => 'Etat passable',
-                    'mauvais' => 'Mauvais état',
-                ],
-            ])
-            ->add('cover', FileType::class, [
-                'label' => 'Votre cover :',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '512k',
-                        'mimeTypes' => [
-                            'image/jpg',
-                            'image/jpeg',
-                            'image/svg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Merci de choisir un cover valide ".jpg ,.jpeg ,.svg ,.png" et inférieur à 512Ko.',
-                    ])
-                ],
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Créé le livre',
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ])
-            ->getForm();
-
+        $form = $this->createForm(BooksCreateFormType::class, $book);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

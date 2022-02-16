@@ -51,6 +51,7 @@ class Books
 
     public function __construct()
     {
+        $this->setStatus(true);
         $this->historicals = new ArrayCollection();
     }
 

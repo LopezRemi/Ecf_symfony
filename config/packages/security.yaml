@@ -46,6 +46,7 @@ security:
         - { path: ^/books, roles: ROLE_USER }
         - { path: ^/book, roles: ROLE_USER }
         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/register, roles: ROLE_ADMIN }
 when@test:
     security:
         password_hashers:

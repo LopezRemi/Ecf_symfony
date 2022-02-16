@@ -3,5 +3,6 @@
     background-size: cover;
 }
 .wrapper {
-    background: #d4c9bcf4 !important;
+    max-width: 1500px;
+    background: #d4c9bcf4;
 }

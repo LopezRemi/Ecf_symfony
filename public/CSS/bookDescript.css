@@ -13,6 +13,10 @@
 }
 #coverPresentation {
     display: flex;
-    justify-content: center;
+    align-items: center;
     height: 500px;
+}
+#coverPresentation img {
+    max-width: 350pX;
+    max-height: 500px;
 }

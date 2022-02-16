@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Historical;
 use App\Entity\User;
+use App\Entity\Historical;
+use App\Form\UserCreateFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,31 +40,7 @@ class UserController extends AbstractController
         $entityManager = $doctrine->getManager();
         // cree l'objet book$book et initialise les datas
         $user = new User();
-        $form = $this->createFormBuilder($user)
-        ->add('firstname', TextType::class, [
-            'label' => 'Prénom :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-         ])
-        ->add('lastname', TextType::class, [
-            'label' => 'Nom :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-         ])
-        ->add('email', TextType::class, [
-            'label' => 'Email :',
-            'attr' => [
-                'class' => 'form-control mb-4'
-            ]
-         ])
-        ->add('save', SubmitType::class, [
-            'label' => 'Créé l\'emprunteur',
-            'attr' => [
-                'class' => 'btn btn-primary'
-                ]])
-        ->getForm();
+        $form = $this->createForm(UserCreateFormType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
