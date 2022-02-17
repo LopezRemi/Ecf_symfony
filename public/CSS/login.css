@@ -1,0 +1,19 @@
+.bg {
+    background-image: url('../images/login.jpg');
+}
+.fontText {
+    font-family: 'Kaushan Script', cursive;
+}
+.wrapper {
+    margin: auto;
+    max-width: 80%;
+    height: 90vh;
+    width: 95%;
+    font: 22px / 1.5 sans-serif;
+    padding-top: 200px;
+    
+}
+.fontLogin {
+    font-family: 'Great Vibes', cursive;
+    font-size : 300%
+}
